@@ -1,54 +1,83 @@
 
+INSERIR_RECEITA = 1
+VISUALIZAR_RECEITA = 2 
+BUSCAR_RECEITA = 3 
+SAIR = 4
+
+receita_digitada = []
+
 puts "========== Bem - Vindo ao Cookbook, sua rede social de receitas =========="
 puts
 
+def menu()
+    puts "[#{INSERIR_RECEITA}] Para cadastrar uma nova receita"
+    puts "[#{VISUALIZAR_RECEITA}] Para visualizar uma receita cadastrada"
+    puts "[#{BUSCAR_RECEITA}] Para buscar uma receita" 
+    puts "[#{SAIR}] Para sair"
+
+    print "Escolha uma das opções acima: "
+    
+    return gets.to_i()
+end
+
+def inserir_receita()
+    puts "Digite o nome da receita"
+    nome = gets.chomp() 
+    puts "Digite o tipo da receita"
+    tipo = gets.chomp()   
+    puts
+    puts "Receita #{nome} cadastrada com sucesso!"
+    puts  
+    return {nome: nome, tipo: tipo}
+end
+
+def visualizar_receitas(receitas)
+
+    puts "=========== RECEITAS CADASTRADAS ==========="
+
+    receitas.each do |receita|
+        puts "#{receita[:nome]} - #{receita[:tipo]}"
+        puts
+    end
+        if receitas.empty?
+        puts
+        puts "Nenhuma receita cadastrada"   
+        puts 
+         
+    end
+          
+end
+
+# def buscar_receita(receita_digitada, receitas)
+#     print "Digite a receita a ser pesquisada no cookbook: "
+#     receita_digitada = gets
+#     receita_digitada.chomp.each do |receita|
+#         puts "#{receita[:nome]} - #{receita[:tipo]}"
+#         puts
+#     end
+# end
+
 receitas = []
 
-puts "[1] Para cadastrar uma nova receita"
-puts "[2] Para visualizar uma receita cadastrada"
-puts "[3] Para sair"
-
-print "Escolha uma das opções acima: "
-opcao = gets.to_i()
+    opcao = menu()
 
 
-while(opcao != 3) do
+    loop do
     
-    if(opcao == 1)
-        puts "Digite o nome da receita"
-        nome = gets.chomp() 
-    
-        receitas << nome
-    
-        puts
-        puts "Receita #{nome} cadastrada com sucesso!"
-        puts
-    
-    elsif(opcao == 2)
-        puts "=========== RECEITAS CADASTRADAS ==========="
-        # for receita in receitas do
-            
-        #     puts receita
-        #     puts
-
-        # end
-
-        receitas.each do |receita|
-            puts receita
-            puts
-
-        end 
+    if(opcao == INSERIR_RECEITA)
+       receitas << inserir_receita()
+    elsif(opcao == VISUALIZAR_RECEITA)
+        visualizar_receitas(receitas)
+    elsif(opcao == BUSCAR_RECEITA)
+        buscar_receita(receitas, receita_digitada)
+    elsif(opcao == SAIR)
+        break
     else 
         puts "Opção Inválida"
     
     end 
 
-    puts "[1] Para cadastrar uma nova receita"
-    puts "[2] Para visualizar uma receita cadastrada"
-    puts "[3] Para sair"
-
-    print "Escolha uma das opções acima: "
-    opcao = gets.to_i()
+    opcao = menu()
 
 end
 
